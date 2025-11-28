@@ -1,0 +1,37 @@
+; left recursive grammars
+
+; Direct recursion
+expression ::= expression + term    (DIRECT left recursion)
+
+; INDIRECT
+A ::= B a
+B ::= A b   ; B := B a b  
+
+; Another example 
+
+expression ::= expression + term
+             | expression - term
+             | term
+
+term ::= term * factor
+       | term / factor
+       | factor
+
+factor ::= number
+         | ( expression )
+
+; layered grammar to avoid left recursion
+
+expression ::= term expression'
+expression' ::= + term expression'
+              | - term expression'
+              | E
+
+
+term ::= factor term'
+term' ::= * factor term'
+        | / factor term'
+        | E
+
+factor ::= number
+         | ( expression )
