@@ -1,0 +1,24 @@
+; grammar for arithmetic operations 
+
+expression ::= expression + expression
+             | expression - expression
+             | expression * expression
+             | expression / expression
+             | expression ^ expression
+             | - expression
+             | ( expression )
+             | number
+
+; Problems
+
+- Multiple levels of left recursion
+- No precedence encoded
+- Ambiguous (e.g., 2 + 3 * 4 has multiple parse trees)
+
+; Layered grammar removing left recursion and adding operator precedence
+
+expression ::= term ((+ | -) term)*
+term ::= exponent ((* | /) exponent)*
+exponent ::= unary (^ exponent)?
+unary ::= - unary | primary
+primary ::= number | ( expression )
